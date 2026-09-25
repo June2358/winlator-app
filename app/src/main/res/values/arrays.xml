@@ -126,6 +126,10 @@
         <item>Times New Roman</item>
         <item>Trebuchet MS</item>
         <item>Verdana</item>
+        <item>Gulim</item>
+        <item>GulimChe</item>
+        <item>Dotum</item>
+        <item>DotumChe</item>
     </string-array>
     <string-array name="box64_logs">
         <item>@string/disable</item>

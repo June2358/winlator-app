@@ -63,6 +63,32 @@ public abstract class WineUtils {
         userRegistry.setHexValues("Control Panel\\Desktop\\WindowMetrics", "StatusFont", fontNormalData);
     }
 
+    public static void installKoreanFonts(Context context, Container container) {
+        File prefixDir = new File(container.getRootDir(), ".wine");
+        File fontFile = new File(prefixDir, "drive_c/windows/Fonts/gulim.ttc");
+        if (!fontFile.isFile()) {
+            File temporaryFile = new File(fontFile.getParentFile(), "gulim.ttc.tmp");
+            FileUtils.copy(context, "korean-fonts/gulim.ttc", temporaryFile);
+            // Publish only a complete copy of the bundled font collection.
+            if (temporaryFile.length() != 18195676L || !temporaryFile.renameTo(fontFile)) return;
+        }
+
+        // Wine's built-in font links use these families for Korean text.
+        try (WineRegistryEditor registryEditor = new WineRegistryEditor(new File(prefixDir, "system.reg"))) {
+            String[][] fonts = {
+                {"Gulim (TrueType)", "gulim.ttc"},
+                {"GulimChe (TrueType)", "gulim.ttc"},
+                {"Dotum (TrueType)", "gulim.ttc"},
+                {"DotumChe (TrueType)", "gulim.ttc"}
+            };
+            registryEditor.setStringValues("Software\\Microsoft\\Windows\\CurrentVersion\\Fonts", fonts);
+            registryEditor.setStringValues("Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts", fonts);
+            registryEditor.setStringValues("Software\\Microsoft\\Windows NT\\CurrentVersion\\FontSubstitutes",
+                new String[]{"굴림", "Gulim"}, new String[]{"굴림체", "GulimChe"},
+                new String[]{"돋움", "Dotum"}, new String[]{"돋움체", "DotumChe"});
+        }
+    }
+
     public static void applySystemTweaks(Context context, WineInfo wineInfo) {
         File rootDir = RootFS.find(context).getRootDir();
 

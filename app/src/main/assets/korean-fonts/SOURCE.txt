@@ -1,0 +1,6 @@
+Gulim, GulimChe, Dotum, and DotumChe
+Source: https://github.com/googlefonts/gulim
+Revision: 012723a8d5b6a6dc920330f26d165422c3014fd6
+Original file: fonts/ttc/gulim-Regular.ttc
+Bundled as: gulim.ttc (filename changed; font data unmodified)
+License: SIL Open Font License 1.1; see OFL.txt and AUTHORS.txt.

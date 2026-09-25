@@ -456,6 +456,7 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
         }
 
         if (verifyUserRegistry()) containerDataChanged = true;
+        WineUtils.installKoreanFonts(this, container);
         if (extractDXWrapperFiles()) containerDataChanged = true;
 
         if (!wincomponents.equals(container.getExtra("wincomponents"))) {
@@ -514,6 +515,8 @@ public class XServerDisplayActivity extends AppCompatActivity implements Navigat
             String guestExecutable = "wine explorer /desktop="+desktopName+","+xServer.screenInfo+" "+getWineStartCommand();
             guestProgramLauncherComponent.setGuestExecutable(guestExecutable);
 
+            envVars.put("LANG", "ko_KR.UTF-8");
+            envVars.put("LC_ALL", "ko_KR.UTF-8");
             envVars.putAll(container.getEnvVars());
             if (shortcut != null) envVars.putAll(shortcut.getExtra("envVars"));
             if (!envVars.has("WINEESYNC")) envVars.put("WINEESYNC", "1");
